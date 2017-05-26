@@ -125,4 +125,48 @@ graph3 = {'A': [('P', 1), ('B', 4), ('C', 5), ('J', 1)],
           'O': [('H', 3), ('D', 3), ('B', 1)],
           'P': [('B', 2), ('A', 1)]}
 
-print question3(graph3)
+# print question3(graph3)
+
+# QUESTION 5
+
+class Node(object):
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+    
+node1 = Node(1)
+node2 = Node(2)
+node3 = Node(3)
+node4 = Node(4)
+node5 = Node(5)
+node6 = Node(6)
+node7 = Node(7)
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+node5.next = node6
+node6.next = node7
+
+def question5(ll, m):
+    list_length = 0
+    original_node = ll
+    next_node = ll.next
+
+    # Get list length
+    while next_node:
+        list_length += 1
+        next_node = ll.next
+        ll = ll.next
+
+    ll = original_node
+    target_node = None
+    
+    for i in range(list_length - m + 1):
+        target_node = ll
+        ll = ll.next
+
+    return target_node.data
+
+print question5(node1, 6)
+        
