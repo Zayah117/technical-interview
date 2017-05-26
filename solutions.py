@@ -52,34 +52,37 @@ def question3(G):
 
     # Add vertices to S until it's as big as G
     while len(S) < len(G):
+    	# this will be the new connection to add
         short_con = None
+
+        # go through every vertex in S
         for vertex in S:
+        	# get the shortest edge from that vertex
             new_con = get_short_edge(vertex, get_reverse_graph(G, S, vertices))
-            # print "--" + str(short_con)
-            # print new_con
+
+            # if it's not none
             if new_con[0] and new_con[1]:
+            	# and if it's shorter than short_con
                 if not short_con or short_con[1][1] > new_con[1][1]:
+                	# new connection is now the shortest connection
                     short_vert = vertex
                     short_con = new_con
-        # print short_con
         
+        # add shortest connection to S
         S[short_vert].append((short_con[0], short_con[1][1]))
         S[short_con[0]] = [short_con[1]]
 
     return S
 
 def get_short_edge(comp_vertex, G):
-    # print "CALLING FUNCTION ON " + str(comp_vertex)
     short_edge = None
     short_vertex = None
     for vertex in G:
-        # print vertex
         for connected_edge in G[vertex]:
-            # print connected_edge
+            # if connection_edge is connected to comp_vertex
             if connected_edge[0] == comp_vertex:
-                # print "^connected"
+                # make edge short edge if it is shorter than previous short edge
                 if not short_edge or short_edge[1] > connected_edge[1]:
-                    # print "^new short"
                     short_edge = connected_edge
                     short_vertex = vertex
              
