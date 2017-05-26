@@ -130,6 +130,52 @@ graph3 = {'A': [('P', 1), ('B', 4), ('C', 5), ('J', 1)],
 
 # print question3(graph3)
 
+# QUESTION 4
+
+def question4(T, r, n1, n2):
+    n1_ancestors = get_ancestors(T, n1, r, [])
+    n2_ancestors = get_ancestors(T, n2, r, [])
+
+    if len(n1_ancestors) < len(n2_ancestors):
+        short_list = n1_ancestors
+    else:
+        short_list = n2_ancestors
+
+    least_common_ancestor = None
+    for i in range(len(short_list)):
+        if n1_ancestors[i] == n2_ancestors[i]:
+            least_common_ancestor = short_list[i]
+
+    return least_common_ancestor
+
+def get_ancestors(T, n, r, ancestors, level=0):
+    ancestors.append(r)
+    level += 1
+
+    for i in range(len(T[r])):
+        if ((n > r and i > r) or (n < r and i < r)) and T[r][i] == 1:
+            return get_ancestors(T, n, i, ancestors, level)
+
+    return ancestors
+
+tree1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+print question4(tree1, 7, 9, 14)
+
 # QUESTION 5
 
 class Node(object):
@@ -171,5 +217,5 @@ def question5(ll, m):
 
     return target_node.data
 
-print question5(node1, 6)
+# print question5(node1, 6)
         
