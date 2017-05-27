@@ -2,7 +2,7 @@
 
 def question1(s, t):
     # if t is larger than s return false
-    if len(t) > len(s):
+    if not t or not s or len(t) > len(s):
         return False
 
     # main loop
@@ -12,7 +12,14 @@ def question1(s, t):
         
     return False
 
-# print question1("udacity", "adciuy")
+# print question1("udacity", "uda")
+# True
+
+# print question1("udacity", "uuuuuuuuuudacity")
+# False
+
+# print question1("udacity", None)
+# False
 
 
 
@@ -26,6 +33,9 @@ def is_palindrome(s):
         return False
 
 def question2(a):
+    if not a:
+        return None
+    
     for num_of_letters in range(len(a)):
         for i in range(num_of_letters + 1):
             test_case = a[i:len(a)-num_of_letters+i]
@@ -36,6 +46,13 @@ def question2(a):
     return None
 
 # print question2("racecarsarecool")
+# racecar
+
+# print question2("")
+# None
+
+# print question2(None)
+# None
 
 
 
@@ -48,8 +65,11 @@ def question3(G):
         return None
 
     # Setup dictionary S
-    S = {}
-    S[vertices[0]] = []
+    if vertices:
+        S = {}
+        S[vertices[0]] = []
+    else:
+        return None
 
     # Add vertices to S until it's as big as G
     while len(S) < len(G):
@@ -129,13 +149,23 @@ graph3 = {'A': [('P', 1), ('B', 4), ('C', 5), ('J', 1)],
           'O': [('H', 3), ('D', 3), ('B', 1)],
           'P': [('B', 2), ('A', 1)]}
 
-# print question3(graph3)
+# print question3(graph1)
+# {'A': [('C', 1), ('B', 1), ('D', 1)], 'C': [('A', 1)], 'B': [('A', 1)], 'D': [('A', 1)]}
+
+# print question3({})
+# None
+
+# print question3(None)
+# None
 
 # QUESTION 4
 
 def question4(T, r, n1, n2):
     n1_ancestors = get_ancestors(T, n1, r, [])
     n2_ancestors = get_ancestors(T, n2, r, [])
+
+    if n1 not in n1_ancestors or n2 not in n2_ancestors:
+        return None
 
     if len(n1_ancestors) < len(n2_ancestors):
         short_list = n1_ancestors
@@ -153,9 +183,12 @@ def get_ancestors(T, n, r, ancestors, level=0):
     ancestors.append(r)
     level += 1
 
-    for i in range(len(T[r])):
-        if ((n > r and i > r) or (n < r and i < r)) and T[r][i] == 1:
-            return get_ancestors(T, n, i, ancestors, level)
+    try:
+        for i in range(len(T[r])):
+            if ((n > r and i > r) or (n < r and i < r)) and T[r][i] == 1:
+                return get_ancestors(T, n, i, ancestors, level)
+    except IndexError:
+        return []
 
     return ancestors
 
@@ -176,6 +209,13 @@ tree1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
 # print question4(tree1, 7, 9, 14)
+# 11
+
+# print question4(tree1, 7, -24, 100)
+# None
+
+# print question4([], 7, 0, 0)
+# None
 
 # QUESTION 5
 
@@ -216,7 +256,17 @@ def question5(ll, m):
         target_node = ll
         ll = ll.next
 
-    return target_node.data
+    if target_node:
+        return target_node.data
+    else:
+        return None
 
-# print question5(node1, 6)
+# print question5(node1, 4)
+# 4
+
+# print question5(node7, 4)
+# None
+
+# print question5(node1, 100)
+# None
         
