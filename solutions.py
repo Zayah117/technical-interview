@@ -5,7 +5,7 @@ def question1(s, t):
     if len(t) > len(s):
         return False
 
-    
+    # main loop
     for i in range(len(s) - len(t) + 1):
         if sorted(s[i:i+len(t)]) == sorted(t):
             return True
@@ -29,12 +29,13 @@ def question2(a):
     for num_of_letters in range(len(a)):
         for i in range(num_of_letters + 1):
             test_case = a[i:len(a)-num_of_letters+i]
+            # print test_case
             if is_palindrome(test_case):
                 return test_case
             
     return None
 
-# print question2("racecar")
+# print question2("racecarsarecool")
 
 
 
@@ -57,7 +58,7 @@ def question3(G):
 
         # go through every vertex in S
         for vertex in S:
-        	# get the shortest edge from that vertex
+            # get the shortest edge from that vertex (that connects to G - S)
             new_con = get_short_edge(vertex, get_reverse_graph(G, S, vertices))
 
             # if it's not none
@@ -174,7 +175,7 @@ tree1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-print question4(tree1, 7, 9, 14)
+# print question4(tree1, 7, 9, 14)
 
 # QUESTION 5
 

@@ -1,0 +1,39 @@
+QUESTION 1
+Time: O(n)
+Space: O(1)
+
+Run a for loop that tests every possible spot that the substring could fit
+within the main string. For example, if the substring is 3 letters in length,
+I compare it against the main string in 3 letter chucks. 
+
+E.g. main string='Udacity' and substring='aci'. 'Uda'->'dac'->'aci', here
+at 'aci' the loop would return True. (In the code everthing is sorted alphabetically
+to properly test for anagrams).
+
+QUESTION 2
+Time: O(n log n)?
+Space: O(1)
+
+First, test if the entire string is a palindrome, while the test_case is not a palindrome,
+shrink the size of the test_case and test chunks of that size from the string. Test chucks
+continue to get smaller until a palindrome is found and returned (even if it's just one letter).
+
+QUESTION 3
+Time: O(nm)?
+Space: O(n)
+
+This is a greedy algorithm. It works by starting with an empty graph, S, and then adding on to S
+until S has as many vertices as G. As the program loops, it finds the shortest edge that connects
+a vertex of S to a vertex of G-S, and then adds the new 'short edge' and 'short vertex' to S.
+
+QUESTION 4
+Time: O(log n)
+Space: O(log n)
+
+First get all ancestors of n1 and n2, then compare ancestors in ascending order until a match is found.
+
+QUESTION 5
+Time: O(n)
+Space: O(1)
+
+First find the length of the list, then find the target node by moving to the 'list_length - m' position.
