@@ -5,20 +5,32 @@ def question1(s, t):
     if not t or not s or len(t) > len(s):
         return False
 
+    # setup t_count to compare later
+    t_count = {}
+    for character in t:
+        t_count[character] = t.count(character)
+
+    print t_count
+
     # main loop
     for i in range(len(s) - len(t) + 1):
-        if sorted(s[i:i+len(t)]) == sorted(t):
+        
+        s_count = {}
+        for character in s[i:i+len(t)]:
+            s_count[character] = s.count(character)
+
+        if s_count == t_count:
             return True
         
     return False
 
-# print question1("udacity", "uda")
+print question1("udacity", "uda")
 # True
 
-# print question1("udacity", "uuuuuuuuuudacity")
+print question1("udacity", "uuuuuuuuuudacity")
 # False
 
-# print question1("udacity", None)
+print question1("udacity", None)
 # False
 
 
