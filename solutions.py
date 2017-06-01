@@ -24,13 +24,13 @@ def question1(s, t):
         
     return False
 
-print question1("udacity", "uda")
+# print question1("udacity", "uda")
 # True
 
-print question1("udacity", "uuuuuuuuuudacity")
+# print question1("udacity", "uuuuuuuuuudacity")
 # False
 
-print question1("udacity", None)
+# print question1("udacity", None)
 # False
 
 
@@ -45,6 +45,35 @@ def is_palindrome(s):
         return False
 
 def question2(a):
+    S = '|'
+    for character in a:
+        S += character + '|'
+    
+    L = [0] * len(S)
+
+    longest_palindrome = 0
+
+    for i in range(len(S)):
+        mod = 0
+        start = i-mod
+        end = i+mod+1
+        while True:
+            test_string = S[start:end]
+            print test_string
+            print '\n'
+            if is_palindrome(test_string):
+                if len(test_string) > longest_palindrome:
+                    longest_palindrome = len(test_string)
+            mod += 1
+            start = i-mod
+            end = i+mod+1
+
+            if start < 0 or end > len(S):
+                break
+            
+    return longest_palindrome / 2
+    
+    '''
     if not a:
         return None
     
@@ -56,8 +85,9 @@ def question2(a):
                 return test_case
             
     return None
+    '''
 
-# print question2("racecarsarecool")
+print question2("racecar")
 # racecar
 
 # print question2("")
