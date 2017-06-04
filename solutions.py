@@ -44,15 +44,43 @@ def is_palindrome(s):
     else:
         return False
 
+def calculate_d(S, center_position):
+    mod = 0
+    start = center_position-mod
+    end = center_position+mod+1
+
+    longest = None
+    
+    while True:
+        test_string = S[start:end]
+        if is_palindrome(test_string):
+            if not longest or len(test_string) > longest:
+                longest = len(test_string) / 2
+
+        mod += 1
+        start = center_position-mod
+        end = center_position+mod+1
+        
+        if start < 0 or end > len(S):
+            return longest
+
 def question2(a):
     S = '|'
     for character in a:
         S += character + '|'
     
-    L = [0] * len(S)
+    L = [None] * len(S)
 
-    longest_palindrome = 0
+    center_position = 0
 
+    while None in L:
+        d = calculate_d(S, center_position)
+        L[center_position] = d
+        center_position += 1
+
+    return L
+
+    '''
     for i in range(len(S)):
         mod = 0
         start = i-mod
@@ -64,6 +92,7 @@ def question2(a):
             if is_palindrome(test_string):
                 if len(test_string) > longest_palindrome:
                     longest_palindrome = len(test_string)
+                L[i] = len(test_string) / 2
             mod += 1
             start = i-mod
             end = i+mod+1
@@ -71,20 +100,7 @@ def question2(a):
             if start < 0 or end > len(S):
                 break
             
-    return longest_palindrome / 2
-    
-    '''
-    if not a:
-        return None
-    
-    for num_of_letters in range(len(a)):
-        for i in range(num_of_letters + 1):
-            test_case = a[i:len(a)-num_of_letters+i]
-            # print test_case
-            if is_palindrome(test_case):
-                return test_case
-            
-    return None
+    return longest_palindrome / 2, L
     '''
 
 print question2("racecar")
