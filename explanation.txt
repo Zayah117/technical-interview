@@ -2,13 +2,8 @@ QUESTION 1
 Time: O(n)
 Space: O(1)
 
-Run a for loop that tests every possible spot that the substring could fit
-within the main string. For example, if the substring is 3 letters in length,
-I compare it against the main string in 3 letter chucks. 
-
-E.g. main string='Udacity' and substring='aci'. 'Uda'->'dac'->'aci', here
-at 'aci' the loop would return True. (In the code everthing is sorted alphabetically
-to properly test for anagrams).
+Use python's count() function to create dictonaries with letter counts from each word.
+Then compare the dictonaries to find anagrams.
 
 QUESTION 2
 Time: O(n)
