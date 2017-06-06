@@ -11,12 +11,10 @@ at 'aci' the loop would return True. (In the code everthing is sorted alphabetic
 to properly test for anagrams).
 
 QUESTION 2
-Time: O(n log n)?
-Space: O(1)
+Time: O(n)
+Space: O(n)
 
-First, test if the entire string is a palindrome, while the test_case is not a palindrome,
-shrink the size of the test_case and test chunks of that size from the string. Test chucks
-continue to get smaller until a palindrome is found and returned (even if it's just one letter).
+Implemented Manacher's Algorithm as explained here: http://www.geeksforgeeks.org/manachers-algorithm-linear-time-longest-palindromic-substring-part-1/
 
 QUESTION 3
 Time: O(nm)?
