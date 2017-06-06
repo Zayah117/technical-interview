@@ -71,37 +71,19 @@ def question2(a):
     
     L = [None] * len(S)
 
-    center_position = 0
+    center_position = None
+    current_right_position = None
 
-    while None in L:
+    for i in range(len(L)):
+        if not center_position:
+            center_position = i
+
+        # if test cases fail 
         d = calculate_d(S, center_position)
         L[center_position] = d
-        center_position += 1
+        center_position = i + 1
 
     return L
-
-    '''
-    for i in range(len(S)):
-        mod = 0
-        start = i-mod
-        end = i+mod+1
-        while True:
-            test_string = S[start:end]
-            print test_string
-            print '\n'
-            if is_palindrome(test_string):
-                if len(test_string) > longest_palindrome:
-                    longest_palindrome = len(test_string)
-                L[i] = len(test_string) / 2
-            mod += 1
-            start = i-mod
-            end = i+mod+1
-
-            if start < 0 or end > len(S):
-                break
-            
-    return longest_palindrome / 2, L
-    '''
 
 print question2("racecar")
 # racecar
