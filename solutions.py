@@ -105,6 +105,7 @@ def question2(a):
 
 # QUESTION 3
 def question3(G):
+    '''
     # Get vertices from G
     try:
         vertices = sorted(G.keys())
@@ -141,6 +142,26 @@ def question3(G):
         S[short_con[0]] = [short_con[1]]
 
     return S
+    '''
+    print sort_edges(G)
+
+def sort_edges(G):
+    edge_list = []
+    for vertex in G:
+        for edge in G[vertex]:
+            new_element = {}
+            new_element['weight'] = edge[1]
+            new_element['src'] = vertex
+            new_element['dest'] = edge[0]
+
+            if not {'weight': new_element['weight'],
+                    'src': new_element['dest'],
+                    'dest': new_element['src']} in edge_list:
+                edge_list.append(new_element)
+
+    edge_list = sorted(edge_list, key=lambda d: d['weight'])
+
+    return edge_list
 
 def get_short_edge(comp_vertex, G):
     short_edge = None
@@ -195,6 +216,8 @@ graph3 = {'A': [('P', 1), ('B', 4), ('C', 5), ('J', 1)],
           'N': [('G', 1)],
           'O': [('H', 3), ('D', 3), ('B', 1)],
           'P': [('B', 2), ('A', 1)]}
+
+print question3(graph2)
 
 # print question3(graph1)
 # {'A': [('C', 1), ('B', 1), ('D', 1)], 'C': [('A', 1)], 'B': [('A', 1)], 'D': [('A', 1)]}
