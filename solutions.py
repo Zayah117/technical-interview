@@ -37,61 +37,68 @@ def question1(s, t):
 
 # QUESTION 2
 
-def is_palindrome(s):
-    reverse = s[::-1]
-    if s == reverse:
-        return True
-    else:
-        return False
-
-def calculate_d(S, center_position):
-    mod = 0
-    start = center_position-mod
-    end = center_position+mod+1
-
-    longest = None
-    
-    while True:
-        test_string = S[start:end]
-        if is_palindrome(test_string):
-            if not longest or len(test_string) > longest:
-                longest = len(test_string) / 2
-
-        mod += 1
-        start = center_position-mod
-        end = center_position+mod+1
-        
-        if start < 0 or end > len(S):
-            return longest
-
 def question2(a):
-    S = '|'
-    for character in a:
-        S += character + '|'
-    
-    L = [None] * len(S)
+    if not a:
+        return
+    N = len(a)
+    N = 2*N+1 # Position count
 
-    center_position = None
-    current_right_position = None
+    # Setup L
+    L = [0] * N
+    L[0] = 0
+    L[1] = 1
 
-    for i in range(len(L)):
-        if not center_position:
-            center_position = i
+    C = 1 # centerPosition
+    R = 2 # centerRightPosition
+    i = 0 # currentRightPosition
+    iMirror = 0 # currentLeftPosition
+    maxLPSLength = 0
+    maxLPSCenterPosition = 0
+    start = -1
+    end = -1
+    diff = -1
 
-        # if test cases fail 
-        d = calculate_d(S, center_position)
-        L[center_position] = d
-        center_position = i + 1
+    for i in xrange(2,N):
+        # get currentLeftPosition iMirror for currentRightPosition i
+        iMirror = 2*C-i
+        L[i] = 0
+        diff = R - i
 
-    return L
+        # If currentRightPosition i is within centerRightPosition R
+        if diff > 0:
+            L[i] = min(L[iMirror], diff)
 
-print question2("racecar")
+        # Expand palindrom centered at i. If even increase LPS by 1. If odd compare characters and increase.
+        try:
+            while ((i + L[i]) < N and (i - L[i]) > 0) and \
+                    (((i + L[i] + 1) % 2 == 0) or \
+                    (a[(i + L[i] + 1) / 2] == a[(i - L[i] - 1) / 2])):
+                L[i]+=1
+        except Exception as e:
+            pass
+
+        # Update maxLPSLength
+        if L[i] > maxLPSLength:
+            maxLPSLength = L[i]
+            maxLPSCenterPosition = i
+
+        # Adjust center position based on expanded palindrome
+        if i + L[i] > R:
+            C = i
+            R = i + L[i]
+
+    start = (maxLPSCenterPosition - maxLPSLength) / 2
+    end = start + maxLPSLength - 1
+
+    return a[start:end+1]
+
+print question2("racecarsarecool")
 # racecar
 
-# print question2("")
+print question2("")
 # None
 
-# print question2(None)
+print question2(None)
 # None
 
 
