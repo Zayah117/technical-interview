@@ -92,13 +92,13 @@ def question2(a):
 
     return a[start:end+1]
 
-print question2("racecarsarecool")
+# print question2("racecarsarecool")
 # racecar
 
-print question2("")
+# print question2("")
 # None
 
-print question2(None)
+# print question2(None)
 # None
 
 
