@@ -105,47 +105,42 @@ def question2(a):
 
 # QUESTION 3
 def question3(G):
-    '''
-    # Get vertices from G
-    try:
-        vertices = sorted(G.keys())
-    except AttributeError:
-        return None
+    # Get structured edge list
+    edges = structured_edge_list(G)
 
-    # Setup dictionary S
-    if vertices:
-        S = {}
-        S[vertices[0]] = []
-    else:
-        return None
-
-    # Add vertices to S until it's as big as G
-    while len(S) < len(G):
-    	# this will be the new connection to add
-        short_con = None
-
-        # go through every vertex in S
-        for vertex in S:
-            # get the shortest edge from that vertex (that connects to G - S)
-            new_con = get_short_edge(vertex, get_reverse_graph(G, S, vertices))
-
-            # if it's not none
-            if new_con[0] and new_con[1]:
-            	# and if it's shorter than short_con
-                if not short_con or short_con[1][1] > new_con[1][1]:
-                	# new connection is now the shortest connection
-                    short_vert = vertex
-                    short_con = new_con
-        
-        # add shortest connection to S
-        S[short_vert].append((short_con[0], short_con[1][1]))
-        S[short_con[0]] = [short_con[1]]
-
+    S = []
+    for edge in sorted_edges(edges):
+        test = S[:]
+        test.append(edge)
+        if not is_cyclic(G, test):
+            S.append(edge)
     return S
-    '''
-    print sort_edges(G)
 
-def sort_edges(G):
+def is_cyclic(G, edges):
+    # Initialize parent array
+    parent_dict = {}
+    for vertex in G:
+        parent_dict[vertex] = -1
+
+    # Main loop
+    for edge in edges:
+        src_parent = find_parent(edge['src'], parent_dict)
+        dest_parent = find_parent(edge['dest'], parent_dict)
+
+        # If cycle is found
+        if src_parent == dest_parent:
+            return True
+        # Otherwise, union
+        else:
+            parent_dict[src_parent] = dest_parent
+
+def find_parent(v, parent_dict):
+    if parent_dict[v] == -1:
+        return v
+    else:
+        return find_parent(parent_dict[v], parent_dict)
+
+def structured_edge_list(G):
     edge_list = []
     for vertex in G:
         for edge in G[vertex]:
@@ -154,37 +149,19 @@ def sort_edges(G):
             new_element['src'] = vertex
             new_element['dest'] = edge[0]
 
+            # Don't add duplicates
             if not {'weight': new_element['weight'],
                     'src': new_element['dest'],
                     'dest': new_element['src']} in edge_list:
                 edge_list.append(new_element)
 
-    edge_list = sorted(edge_list, key=lambda d: d['weight'])
+    # edge_list = sorted(edge_list, key=lambda d: d['weight'])
 
     return edge_list
 
-def get_short_edge(comp_vertex, G):
-    short_edge = None
-    short_vertex = None
-    for vertex in G:
-        for connected_edge in G[vertex]:
-            # if connection_edge is connected to comp_vertex
-            if connected_edge[0] == comp_vertex:
-                # make edge short edge if it is shorter than previous short edge
-                if not short_edge or short_edge[1] > connected_edge[1]:
-                    short_edge = connected_edge
-                    short_vertex = vertex
-             
-    return short_vertex, short_edge
-
-def get_reverse_graph(G, S, vertices):
-    G_minus_S = {}
-    
-    for i in range(len(vertices)):    
-        if vertices[i] in G and vertices[i] not in S:
-            G_minus_S[vertices[i]] = G[vertices[i]]
-
-    return G_minus_S
+def sorted_edges(structured_list):
+    return sorted(structured_list, key=lambda d: d['weight'])
+    pass
         
 
 graph1 = {'A': [('B', 1), ('C', 1), ('D', 1)],
@@ -200,24 +177,8 @@ graph2 = {'A': [('B', 3), ('C', 4), ('E', 4)],
           'F': [('C', 3), ('D', 1)],
           'G': [('B', 1), ('D', 2)]}
 
-graph3 = {'A': [('P', 1), ('B', 4), ('C', 5), ('J', 1)],
-          'B': [('O', 1), ('D', 4), ('C', 4), ('A', 4), ('P', 2)],
-          'C': [('B', 4), ('I', 2), ('E', 3), ('F', 3), ('J', 3), ('A', 5)],
-          'D': [('H', 3), ('K', 3), ('L', 4), ('E', 4), ('B', 4), ('O', 3)],
-          'E': [('D', 4), ('L', 1), ('F', 4), ('C', 3)],
-          'F': [('J', 4), ('C', 3), ('E', 4), ('M', 2)],
-          'G': [('K', 3), ('N', 1), ('L', 3)],
-          'H': [('K', 2), ('D', 3), ('O', 3)],
-          'I': [('C', 2)],
-          'J': [('A', 1), ('C', 3), ('F', 4)],
-          'K': [('G', 3), ('D', 3), ('H', 2)],
-          'L': [('D', 4), ('G', 3), ('M', 4), ('E', 1)],
-          'M': [('L', 4), ('F', 2)],
-          'N': [('G', 1)],
-          'O': [('H', 3), ('D', 3), ('B', 1)],
-          'P': [('B', 2), ('A', 1)]}
-
 print question3(graph2)
+# print question3({'A': [('C', 1), ('B', 1), ('D', 1)], 'C': [('A', 1)], 'B': [('A', 1)], 'D': [('A', 1)]})
 
 # print question3(graph1)
 # {'A': [('C', 1), ('B', 1), ('D', 1)], 'C': [('A', 1)], 'B': [('A', 1)], 'D': [('A', 1)]}
