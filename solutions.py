@@ -114,7 +114,11 @@ def question3(G):
         test.append(edge)
         if not is_cyclic(G, test):
             S.append(edge)
-    return S
+
+    # Rebuild adjacency list
+    G = adjacency_list(S)
+
+    return G
 
 def is_cyclic(G, edges):
     # Initialize parent array
@@ -155,33 +159,43 @@ def structured_edge_list(G):
                     'dest': new_element['src']} in edge_list:
                 edge_list.append(new_element)
 
-    # edge_list = sorted(edge_list, key=lambda d: d['weight'])
-
     return edge_list
 
 def sorted_edges(structured_list):
     return sorted(structured_list, key=lambda d: d['weight'])
-    pass
-        
+
+def adjacency_list(S):
+    G = {}
+    for edge in S:
+        try:
+            G[edge['src']].append((edge['dest'], edge['weight']))
+        except KeyError:
+            G[edge['src']] = [(edge['dest'], edge['weight'])]
+
+        try:
+            G[edge['dest']].append((edge['src'], edge['weight']))
+        except KeyError:
+            G[edge['dest']] = [(edge['src'], edge['weight'])]
+
+    return G
 
 graph1 = {'A': [('B', 1), ('C', 1), ('D', 1)],
           'B': [('A', 1), ('C', 3), ('D', 3)],
           'C': [('A', 1), ('B', 3), ('D', 3)],
           'D': [('A', 1), ('B', 3), ('C', 3)]}
 
-graph2 = {'A': [('B', 3), ('C', 4), ('E', 4)],
-          'B': [('A', 3), ('D', 3), ('E', 1)],
-          'C': [('A', 4), ('D', 2), ('E', 1), ('F', 3)],
-          'D': [('B', 3), ('C', 2), ('E', 2), ('F', 1)],
-          'E': [('A', 4), ('B', 1), ('C', 1), ('D', 2)],
-          'F': [('C', 3), ('D', 1)],
-          'G': [('B', 1), ('D', 2)]}
-
-print question3(graph2)
-# print question3({'A': [('C', 1), ('B', 1), ('D', 1)], 'C': [('A', 1)], 'B': [('A', 1)], 'D': [('A', 1)]})
+graph2 = {'A': [('I', 4), ('B', 3), ('C', 4)],
+          'B': [('E', 3), ('F', 2), ('D', 1), ('C', 3), ('A', 3)],
+          'C': [('B', 3), ('D', 1), ('G', 2), ('A', 4)],
+          'D': [('B', 1), ('F', 2), ('H', 2), ('C', 1)],
+          'E': [('B', 3), ('I', 2)],
+          'F': [('H', 1), ('D', 2), ('B', 2)],
+          'G': [('C', 2)],
+          'H': [('D', 2), ('F', 1)],
+          'I': [('E', 2), ('A', 4)]}
 
 # print question3(graph1)
-# {'A': [('C', 1), ('B', 1), ('D', 1)], 'C': [('A', 1)], 'B': [('A', 1)], 'D': [('A', 1)]}
+# {'A': [('B', 1), ('C', 1), ('D', 1)], 'C': [('A', 1)], 'B': [('A', 1)], 'D': [('A', 1)]}
 
 # print question3({})
 # None
