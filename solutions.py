@@ -10,8 +10,6 @@ def question1(s, t):
     for character in t:
         t_count[character] = t.count(character)
 
-    print t_count
-
     # main loop
     for i in range(len(s) - len(t) + 1):
         
@@ -24,14 +22,18 @@ def question1(s, t):
         
     return False
 
-# print question1("udacity", "uda")
+print "QUESTION 1"
+
+print question1("udacity", "uda")
 # True
 
-# print question1("udacity", "uuuuuuuuuudacity")
+print question1("udacity", "uuuuuuuuuudacity")
 # False
 
-# print question1("udacity", None)
+print question1("udacity", None)
 # False
+
+print "\n"
 
 
 
@@ -92,19 +94,26 @@ def question2(a):
 
     return a[start:end+1]
 
-# print question2("racecarsarecool")
+print "QUESTION 2"
+
+print question2("racecarsarecool")
 # racecar
 
-# print question2("")
+print question2("")
 # None
 
-# print question2(None)
+print question2(None)
 # None
+
+print "\n"
 
 
 
 # QUESTION 3
 def question3(G):
+    if not G:
+        return
+    
     # Get structured edge list
     edges = structured_edge_list(G)
 
@@ -194,14 +203,18 @@ graph2 = {'A': [('I', 4), ('B', 3), ('C', 4)],
           'H': [('D', 2), ('F', 1)],
           'I': [('E', 2), ('A', 4)]}
 
-# print question3(graph1)
+print "QUESTION 3"
+
+print question3(graph1)
 # {'A': [('B', 1), ('C', 1), ('D', 1)], 'C': [('A', 1)], 'B': [('A', 1)], 'D': [('A', 1)]}
 
-# print question3({})
+print question3({})
 # None
 
-# print question3(None)
+print question3(None)
 # None
+
+print "\n"
 
 # QUESTION 4
 
@@ -253,14 +266,18 @@ tree1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-# print question4(tree1, 7, 9, 14)
+print "QUESTION 4"
+
+print question4(tree1, 7, 9, 14)
 # 11
 
-# print question4(tree1, 7, -24, 100)
+print question4(tree1, 7, -24, 100)
 # None
 
-# print question4([], 7, 0, 0)
+print question4([], 7, 0, 0)
 # None
+
+print "\n"
 
 # QUESTION 5
 
@@ -306,12 +323,16 @@ def question5(ll, m):
     else:
         return None
 
-# print question5(node1, 4)
+print "QUESTION 5"
+
+print question5(node1, 4)
 # 4
 
-# print question5(node7, 4)
+print question5(node7, 4)
 # None
 
-# print question5(node1, 100)
+print question5(node1, 100)
 # None
+
+print "\n"
         
